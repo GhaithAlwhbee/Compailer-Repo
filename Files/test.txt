@@ -1,0 +1,12 @@
+class person{
+
+int x = 10 ;
+
+}
+
+
+
+
+
+
+
