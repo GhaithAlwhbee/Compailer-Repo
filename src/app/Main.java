@@ -30,6 +30,7 @@ public class Main {
         ParseTree tree = parser.compilationUnit();
         BaseVisitor baseVisitor = new BaseVisitor();
         CompilationUnit program = (CompilationUnit) baseVisitor.visit(tree);
+        System.out.printf("\n(((\t\t\tAST\t\t\t)))\n");
         System.out.println(program);
 
     }

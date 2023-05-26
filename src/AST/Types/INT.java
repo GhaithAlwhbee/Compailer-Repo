@@ -16,6 +16,6 @@ public class INT implements primitiveType {
 
     @Override
     public String toString() {
-        return int_type ;
+        return " " +int_type +" " ;
     }
 }

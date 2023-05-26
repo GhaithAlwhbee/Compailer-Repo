@@ -27,6 +27,6 @@ public class FormalParameter {
 
     @Override
     public String toString() {
-        return "FormalParameter{ " + primitive + identifier + " }";
+        return primitive + identifier ;
     }
 }

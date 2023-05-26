@@ -16,6 +16,6 @@ public class BOOLEAN implements primitiveType {
 
     @Override
     public String toString() {
-        return bool_type;
+        return " "+bool_type+" ";
     }
 }

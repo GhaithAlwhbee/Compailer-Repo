@@ -1,6 +1,9 @@
 class person{
 
-int x = 10 ;
+int funName(int a , int b){
+int x =10
+bool v = false
+}
 
 }
 

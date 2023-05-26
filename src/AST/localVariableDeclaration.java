@@ -3,7 +3,7 @@ package AST;
 import AST.Types.primitiveType;
 import AST.clases.ClassBody;
 
-public class localVariableDeclaration implements ClassBody {
+public class localVariableDeclaration{
 
 
     primitiveType primitive;
