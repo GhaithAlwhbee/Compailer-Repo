@@ -1,6 +1,10 @@
 package AST.Expressions;
 
 public class Plus implements Expression{
+    @Override
+    public String getType() {
+        return null;
+    }
 
     Expression ex1 , ex2 ;
 

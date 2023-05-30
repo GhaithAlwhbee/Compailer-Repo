@@ -94,6 +94,16 @@ public interface dartParserListener extends ParseTreeListener {
 	 */
 	void exitClassDeclarationClassBody(dartParser.ClassDeclarationClassBodyContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link dartParser#localVariableDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterLocalVariableDeclaration(dartParser.LocalVariableDeclarationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link dartParser#localVariableDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitLocalVariableDeclaration(dartParser.LocalVariableDeclarationContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link dartParser#variableDeclarators}.
 	 * @param ctx the parse tree
 	 */
@@ -123,16 +133,6 @@ public interface dartParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitProgram(dartParser.ProgramContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link dartParser#localVariableDeclaration}.
-	 * @param ctx the parse tree
-	 */
-	void enterLocalVariableDeclaration(dartParser.LocalVariableDeclarationContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link dartParser#localVariableDeclaration}.
-	 * @param ctx the parse tree
-	 */
-	void exitLocalVariableDeclaration(dartParser.LocalVariableDeclarationContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link dartParser#methodDeclaration}.
 	 * @param ctx the parse tree
@@ -245,6 +245,18 @@ public interface dartParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStatementVariableDeclaration(dartParser.StatementVariableDeclarationContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code StatementExpression}
+	 * labeled alternative in {@link dartParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterStatementExpression(dartParser.StatementExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code StatementExpression}
+	 * labeled alternative in {@link dartParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitStatementExpression(dartParser.StatementExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ReturnExpression}
 	 * labeled alternative in {@link dartParser#expression}.
@@ -424,6 +436,18 @@ public interface dartParserListener extends ParseTreeListener {
 	 */
 	void exitLiteralNumeric(dartParser.LiteralNumericContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code LiteralChar}
+	 * labeled alternative in {@link dartParser#literal}.
+	 * @param ctx the parse tree
+	 */
+	void enterLiteralChar(dartParser.LiteralCharContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code LiteralChar}
+	 * labeled alternative in {@link dartParser#literal}.
+	 * @param ctx the parse tree
+	 */
+	void exitLiteralChar(dartParser.LiteralCharContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code LiteralString}
 	 * labeled alternative in {@link dartParser#literal}.
 	 * @param ctx the parse tree
@@ -465,6 +489,16 @@ public interface dartParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNumericLiteral(dartParser.NumericLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link dartParser#charLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void enterCharLiteral(dartParser.CharLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link dartParser#charLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void exitCharLiteral(dartParser.CharLiteralContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link dartParser#stringLiteral}.
 	 * @param ctx the parse tree
@@ -547,6 +581,18 @@ public interface dartParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDoubleType(dartParser.DoubleTypeContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code StringType}
+	 * labeled alternative in {@link dartParser#primitiveType}.
+	 * @param ctx the parse tree
+	 */
+	void enterStringType(dartParser.StringTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code StringType}
+	 * labeled alternative in {@link dartParser#primitiveType}.
+	 * @param ctx the parse tree
+	 */
+	void exitStringType(dartParser.StringTypeContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link dartParser#block}.
 	 * @param ctx the parse tree

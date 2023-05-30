@@ -1,6 +1,7 @@
 package AST;
 
 import AST.Expressions.Expression;
+import AST.Statements.Statement;
 
 public class variableDeclarator {
 
@@ -26,6 +27,11 @@ public class variableDeclarator {
 
     @Override
     public String toString() {
-        return identifier +" = " + expression ;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(identifier);
+        if(expression != null){
+            stringBuilder.append(" = "+expression);
+        }
+        return stringBuilder.toString();
     }
 }

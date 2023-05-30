@@ -62,6 +62,12 @@ public interface dartParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitClassDeclarationClassBody(dartParser.ClassDeclarationClassBodyContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link dartParser#localVariableDeclaration}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLocalVariableDeclaration(dartParser.LocalVariableDeclarationContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link dartParser#variableDeclarators}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -79,12 +85,6 @@ public interface dartParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitProgram(dartParser.ProgramContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link dartParser#localVariableDeclaration}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLocalVariableDeclaration(dartParser.LocalVariableDeclarationContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link dartParser#methodDeclaration}.
 	 * @param ctx the parse tree
@@ -151,6 +151,13 @@ public interface dartParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitStatementVariableDeclaration(dartParser.StatementVariableDeclarationContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code StatementExpression}
+	 * labeled alternative in {@link dartParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStatementExpression(dartParser.StatementExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ReturnExpression}
 	 * labeled alternative in {@link dartParser#expression}.
@@ -256,6 +263,13 @@ public interface dartParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLiteralNumeric(dartParser.LiteralNumericContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code LiteralChar}
+	 * labeled alternative in {@link dartParser#literal}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLiteralChar(dartParser.LiteralCharContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code LiteralString}
 	 * labeled alternative in {@link dartParser#literal}.
 	 * @param ctx the parse tree
@@ -280,6 +294,12 @@ public interface dartParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitNumericLiteral(dartParser.NumericLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link dartParser#charLiteral}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCharLiteral(dartParser.CharLiteralContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link dartParser#stringLiteral}.
 	 * @param ctx the parse tree
@@ -328,6 +348,13 @@ public interface dartParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitDoubleType(dartParser.DoubleTypeContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code StringType}
+	 * labeled alternative in {@link dartParser#primitiveType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStringType(dartParser.StringTypeContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link dartParser#block}.
 	 * @param ctx the parse tree

@@ -1,20 +1,19 @@
 package Visitor;
 
 import AST.*;
+import AST.ErorrHandlingPackage.SemanticCheck;
 import AST.Expressions.*;
 import AST.Literals.*;
 import AST.MethodPackage.FormalParameter;
 import AST.MethodPackage.FormalParameters;
 import AST.MethodPackage.MethodDeclaration;
 import AST.Statements.*;
-import AST.SymbolTablePackage.Row;
-import AST.SymbolTablePackage.SymbolTable;
-import AST.Types.BOOLEAN;
-import AST.Types.INT;
-import AST.Types.primitiveType;
+import AST.Types.*;
 import AST.clases.*;
 import Antlr.dartParser;
 import Antlr.dartParserBaseVisitor;
+import SemanticAnalysis.Symbol;
+import SemanticAnalysis.SymbolTable;
 
 public class BaseVisitor extends dartParserBaseVisitor {
 
@@ -47,6 +46,7 @@ public class BaseVisitor extends dartParserBaseVisitor {
     @Override
     public CompilationUnit visitCompilationUnit(dartParser.CompilationUnitContext ctx) {
         CompilationUnit compilationUnit = new CompilationUnit();
+
         for(int i =0 ; i< ctx.classDeclaration().size();i++)
         {
             if(ctx.classDeclaration(i)!= null)
@@ -54,27 +54,41 @@ public class BaseVisitor extends dartParserBaseVisitor {
                 compilationUnit.getClassDeclaration().add(visitClassDeclaration(ctx.classDeclaration(i)));
             }
         }
-        this.symbolTable.print();
+        //this.symbolTable.print();
+
+//        SemanticCheck semanticCheck = new SemanticCheck();
+//        semanticCheck.setSymbolTable(symbolTable);
+//        semanticCheck.check();
+
         return compilationUnit;
     }
 
     @Override
     public ClassDeclaration visitClassDeclaration(dartParser.ClassDeclarationContext ctx) {
         ClassDeclaration classDeclaration = new ClassDeclaration();
-        classDeclaration.setIdentifier(ctx.IDENTIFIER().getText());
 
-        Row row = new Row();
-        row.setType("class");
-        row.setValue(classDeclaration.getIdentifier());
-        symbolTable.getRows().add(row);
-
-        for(int i =0 ; i< ctx.classBodyDeclaration().size();i++)
+        if (symbolTable.lookup(ctx.IDENTIFIER().getText()) != null)
         {
-            if(ctx.classBodyDeclaration(i)!= null)
-            {
-                classDeclaration.getClassBodyArrayList().add((ClassBody)visit(ctx.classBodyDeclaration(i)));
-            }
+            // class has already been declared in the current scope
+            // report an error
+            System.err.println("Error in Line "+ ctx.IDENTIFIER().getSymbol().getLine() +" : the identifier " + ctx.IDENTIFIER().getText() + " has already been declared");
         }
+        else
+        {
+            symbolTable.insert(ctx.IDENTIFIER().getText(),ctx.IDENTIFIER().getText(),"class");
+            classDeclaration.setIdentifier(ctx.IDENTIFIER().getText());
+            symbolTable.enterScope();
+
+            for(int i =0 ; i< ctx.classBodyDeclaration().size();i++)
+            {
+                if(ctx.classBodyDeclaration(i)!= null)
+                {
+                    classDeclaration.getClassBodyArrayList().add((ClassBody)visit(ctx.classBodyDeclaration(i)));
+                }
+            }
+            symbolTable.exitScope();
+        }
+
         return classDeclaration;
     }
 
@@ -110,9 +124,30 @@ public class BaseVisitor extends dartParserBaseVisitor {
 
         variableDeclaration.setPrimitive((primitiveType) visit(ctx.primitiveType()));
 
-        variableDeclaration.setVariableDeclaratorsObject((variableDeclarators) visit(ctx.variableDeclarators()));
+        //variableDeclaration.setVariableDeclaratorsObject(visitVariableDeclarators(ctx.variableDeclarators()));
 
-        return variableDeclaration;
+        for (dartParser.VariableDeclaratorContext varCtx: ctx.variableDeclarators().variableDeclarator()
+             ) {
+            if (symbolTable.lookup(varCtx.IDENTIFIER().getText()) != null) {
+                // variable has already been declared in the current scope
+                // report an error
+                System.err.println("Error in Line "+ varCtx.IDENTIFIER().getSymbol().getLine() +" : variable " + varCtx.IDENTIFIER().getText() + " has already been declared");
+            } else {
+                // variable has not been declared in the current scope
+                // add it to the symbol tableSystem.err.println("Error in Line "+ varCtx.IDENTIFIER().getSymbol().getLine() +" : variable " + varCtx.IDENTIFIER().getText() + " has already been declared");
+                symbolTable.insert(varCtx.IDENTIFIER().getText(),variableDeclaration.getPrimitive().getType(),"variable");
+            }
+//            if (varCtx.expression() != null) {
+//                String exprType = (String) visit(varCtx.expression());
+//                if (!variableDeclaration.getPrimitive().getType().equals(exprType)) {
+//                    System.err.println("Error in Line "+ varCtx.IDENTIFIER().getSymbol().getLine() +" : type mismatch in variable declaration");
+//                }
+//            }
+        }
+
+        variableDeclaration.setVariableDeclaratorsObject(visitVariableDeclarators(ctx.variableDeclarators()));
+
+            return variableDeclaration;
     }
 
     @Override
@@ -130,15 +165,24 @@ public class BaseVisitor extends dartParserBaseVisitor {
         variableDeclarator declarator = new variableDeclarator();
         declarator.setIdentifier(ctx.IDENTIFIER().getText());
 
-        Row row = new Row();
-        row.setType("variable");
-        row.setValue(declarator.getIdentifier());
-        symbolTable.getRows().add(row);
+        if (ctx.expression() != null) {
+            Expression expr = (Expression) visit(ctx.expression());
+            String exprType = expr.getType();
+                // get the type of the variable from the symbol table
+                String varType = symbolTable.lookup(declarator.getIdentifier()).getType();
+                //System.out.printf("\n exprType: "+ exprType+", varType: "+ varType);
+                if (!exprType.equals(varType)) {
+                    // report a type mismatch error
+                    System.err.println("Error in Line: "+ctx.IDENTIFIER().getSymbol().getLine()+" type mismatch in variable declaration");
+                }
 
-        if(ctx.expression() != null)
-        {
-            declarator.setExpression((Expression) visit(ctx.expression()));
+            declarator.setExpression(expr);
         }
+
+//        if(ctx.expression() != null)
+//        {
+//            declarator.setExpression((Expression) visit(ctx.expression()));
+//        }
         return declarator;
     }
 
@@ -151,24 +195,31 @@ public class BaseVisitor extends dartParserBaseVisitor {
             methodDeclaration.setPrim((primitiveType) visit(ctx.primitiveType()));
         else
         {
-            Row row = new Row();
-            row.setType("type");
-            row.setValue("void");
-            symbolTable.getRows().add(row);
+//            Row row = new Row();
+//            row.setType("type");
+//            row.setValue("void");
+//            symbolTable.getRows().add(row);
         }
 
-        methodDeclaration.setIdentifier(ctx.IDENTIFIER().getText());
-        Row row = new Row();
-        row.setType("identifier");
-        row.setValue(methodDeclaration.getIdentifier());
-        symbolTable.getRows().add(row);
+        if(symbolTable.lookup(ctx.IDENTIFIER().getText())!=null)
+        {
+            System.err.println("Error in Line "+ ctx.IDENTIFIER().getSymbol().getLine() +" : method " + ctx.IDENTIFIER().getText() + " has already been declared");
+        }
+        else
+        {
+            symbolTable.insert(ctx.IDENTIFIER().getText(),
+                               methodDeclaration.getPrim()!= null? methodDeclaration.getPrim().getType():"void",
+                          "function");
+            methodDeclaration.setIdentifier(ctx.IDENTIFIER().getText());
+        }
 
+        symbolTable.enterScope();
         methodDeclaration.setFormalParameters(visitFormalParameters(ctx.formalParameters()));
-
         for(int i =0;i<ctx.block().statement().size();i++)
         {
             methodDeclaration.getStatement().add((Statement) visit(ctx.block().statement(i)));
         }
+        symbolTable.exitScope();
 
         return methodDeclaration;
     }
@@ -191,13 +242,16 @@ public class BaseVisitor extends dartParserBaseVisitor {
 
         formalParameter.setP((primitiveType) visit(ctx.primitiveType()));
 
-        formalParameter.setIdentifier(ctx.IDENTIFIER().getText());
-        Row row = new Row();
-        row.setType("identifier");
-        row.setValue(formalParameter.getIdentifier());
-        symbolTable.getRows().add(row);
+        if(symbolTable.lookup(ctx.IDENTIFIER().getText())!=null)
+        {
+            System.err.println("Error in Line "+ ctx.IDENTIFIER().getSymbol().getLine() +" : variable " + ctx.IDENTIFIER().getText() + " has already been declared");
 
-
+        }
+        else
+        {
+            symbolTable.insert(ctx.IDENTIFIER().getText(),formalParameter.getP().getType(),"variable");
+            formalParameter.setIdentifier(ctx.IDENTIFIER().getText());
+        }
 
         return formalParameter;
     }
@@ -211,11 +265,12 @@ public class BaseVisitor extends dartParserBaseVisitor {
     @Override
     public Statement visitStatementBlock(dartParser.StatementBlockContext ctx) {
         BlockStatement blockStatement = new BlockStatement();
-
+        symbolTable.enterScope();
         for(int i =0;i<ctx.block().statement().size();i++)
         {
             blockStatement.getStatement().add((Statement) visit(ctx.block().statement(i)));
         }
+        symbolTable.exitScope();
 
         return blockStatement;
     }
@@ -249,6 +304,16 @@ public class BaseVisitor extends dartParserBaseVisitor {
         return variableDeclarationStatement;
     }
 
+    @Override
+    public Statement visitStatementExpression(dartParser.StatementExpressionContext ctx) {
+        ExpressionStatement expressionStatement = new ExpressionStatement();
+
+        expressionStatement.setExpression((Expression) visit(ctx.expression()));
+
+        return expressionStatement ;
+    }
+
+
     //////             End Statement
 
     //////             Start Expression
@@ -256,12 +321,27 @@ public class BaseVisitor extends dartParserBaseVisitor {
     @Override
     public Expression visitExpressionIDENTIFIER(dartParser.ExpressionIDENTIFIERContext ctx) {
         IdentifierExpression identifierExpression = new IdentifierExpression();
-        identifierExpression.setValue(ctx.IDENTIFIER().getText());
 
-        Row row = new Row();
-        row.setType("identifier");
-        row.setValue(identifierExpression.getValue());
-        symbolTable.getRows().add(row);
+        if(symbolTable.lookup(ctx.IDENTIFIER().getText()) != null)
+        {
+            identifierExpression.setValue(ctx.IDENTIFIER().getText());
+        }
+        else
+            System.err.println("Error in Line: "+ctx.IDENTIFIER().getSymbol().getLine()+": "+ctx.IDENTIFIER().getText()+" is not declared");
+
+
+        if (ctx.expression() != null) {
+            Expression expr = (Expression) visit(ctx.expression());
+            String exprType = expr.getType();
+            // get the type of the variable from the symbol table
+            String varType = symbolTable.lookup(identifierExpression.getValue()).getType();
+            if (!exprType.equals(varType)) {
+                // report a type mismatch error
+                System.err.println("Error in Line: "+ctx.IDENTIFIER().getSymbol().getLine()+" type mismatch in variable declaration");
+            }
+
+            identifierExpression.setExpression(expr);
+        }
 
         return identifierExpression;
     }
@@ -307,11 +387,6 @@ public class BaseVisitor extends dartParserBaseVisitor {
         Postfix postfix = new Postfix();
         postfix.setPostfixSymbol(ctx.postfix.getText());
 
-        Row row = new Row();
-        row.setType("postfix");
-        row.setValue(postfix.getPostfixSymbol());
-        symbolTable.getRows().add(row);
-
         postfix.setEx1((Expression) visit(ctx.expression()));
         return postfix;
     }
@@ -321,7 +396,25 @@ public class BaseVisitor extends dartParserBaseVisitor {
     public Expression visitExpressionLiteral(dartParser.ExpressionLiteralContext ctx) {
         LiteralExpression literalExpression = new LiteralExpression();
 
-        literalExpression.setLiteral((Literal) visit(ctx.literal()));
+        Literal literal = (Literal) visit(ctx.literal());
+        String type = null;
+        if (literal instanceof BooleanLiteral) {
+            type = "bool";
+        } else if (literal instanceof NumericLiteral) {
+            type = "int"; // or "double" depending on the value of the numeric literal
+        } else if (literal instanceof StringLiteral) {
+            type = "String";
+        }
+        else if (literal instanceof CharLiteral) {
+            type = "char";
+        }else if (literal instanceof NullLiteral) {
+            type = "null";
+        }
+
+        literalExpression.setType(type);
+        literalExpression.setLiteral(literal);
+
+        //literalExpression.setLiteral((Literal) visit(ctx.literal()));
 
         return literalExpression;
     }
@@ -331,10 +424,6 @@ public class BaseVisitor extends dartParserBaseVisitor {
         BooleanLiteral booleanLiteral = new BooleanLiteral();
         booleanLiteral.setValue(ctx.booleanLiteral().getText());
 
-        Row row = new Row();
-        row.setType("booleanLiteral");
-        row.setValue(booleanLiteral.getValue());
-        symbolTable.getRows().add(row);
 
         return booleanLiteral;
     }
@@ -344,10 +433,6 @@ public class BaseVisitor extends dartParserBaseVisitor {
         NumericLiteral numericLiteral = new NumericLiteral();
         numericLiteral.setValue(ctx.numericLiteral().getText());
 
-        Row row = new Row();
-        row.setType("numericLiteral");
-        row.setValue(numericLiteral.getValue());
-        symbolTable.getRows().add(row);
 
         return numericLiteral;
     }
@@ -357,23 +442,21 @@ public class BaseVisitor extends dartParserBaseVisitor {
         StringLiteral stringLiteral = new StringLiteral();
         stringLiteral.setValue(ctx.stringLiteral().getText());
 
-        Row row = new Row();
-        row.setType("stringLiteral");
-        row.setValue(stringLiteral.getValue());
-        symbolTable.getRows().add(row);
-
         return stringLiteral;
+    }
+
+    @Override
+    public Literal visitLiteralChar(dartParser.LiteralCharContext ctx) {
+        CharLiteral charLiteral = new CharLiteral();
+        charLiteral.setValue(ctx.charLiteral().getText());
+
+        return charLiteral;
     }
 
     @Override
     public Literal visitLiteralNull(dartParser.LiteralNullContext ctx) {
         NullLiteral nullLiteral = new NullLiteral();
         nullLiteral.setValue(ctx.nullLiteral().getText());
-
-        Row row = new Row();
-        row.setType("nullLiteral");
-        row.setValue(nullLiteral.getValue());
-        symbolTable.getRows().add(row);
 
         return nullLiteral;
     }
@@ -385,15 +468,11 @@ public class BaseVisitor extends dartParserBaseVisitor {
     //////             End Expression
 
 
+    //////             Start primitiveType
     @Override
     public primitiveType visitIntType(dartParser.IntTypeContext ctx) {
         INT intObject = new INT();
-        intObject.setInt_type(ctx.INT().getText());
-
-        Row row = new Row();
-        row.setType("type");
-        row.setValue(intObject.getInt_type());
-        symbolTable.getRows().add(row);
+        intObject.setType(ctx.INT().getText());
 
         return intObject;
     }
@@ -401,18 +480,25 @@ public class BaseVisitor extends dartParserBaseVisitor {
     @Override
     public primitiveType visitBoolType(dartParser.BoolTypeContext ctx) {
         BOOLEAN boolObject = new BOOLEAN();
-        boolObject.setBool(ctx.BOOLEAN().getText());
-
-        Row row = new Row();
-        row.setType("type");
-        row.setValue(boolObject.getBool());
-        symbolTable.getRows().add(row);
+        boolObject.setType(ctx.BOOLEAN().getText());
 
         return boolObject;
     }
+    @Override
+    public primitiveType visitCharType(dartParser.CharTypeContext ctx) {
+        CHAR charObject = new CHAR();
+        charObject.setType(ctx.CHAR().getText());
 
-//    @Override
-//    public primitiveType visitDoubleType(dartParser.DoubleTypeContext ctx) {
-//        return super.visitDoubleType(ctx);
-//    }
+        return charObject;
+    }
+
+    @Override
+    public primitiveType visitStringType(dartParser.StringTypeContext ctx) {
+        STRING stringObject = new STRING();
+        stringObject.setType(ctx.STRING_().getText());
+
+        return stringObject;
+    }
+
+    //////             End primitiveType
 }

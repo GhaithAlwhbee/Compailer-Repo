@@ -43,6 +43,6 @@ public class FORStatement implements Statement{
 
     @Override
     public String toString() {
-        return "FOR(" + localVariable +';'+ ex1 + ';' + ex2 +')'+statement ;
+        return "FOR(" + localVariable +';'+ ex1 + ';' + ex2 +')'+"\n"+statement ;
     }
 }

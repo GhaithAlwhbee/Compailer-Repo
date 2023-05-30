@@ -48,6 +48,10 @@ classBodyDeclaration
 
 // variable decleration
 
+localVariableDeclaration
+    :  primitiveType variableDeclarators
+    ;
+
 variableDeclarators
     : variableDeclarator (C variableDeclarator)*
     ;
@@ -61,9 +65,6 @@ program
 //    : localVariableDeclaration*
     ;
 
-localVariableDeclaration
-    :  primitiveType variableDeclarators
-    ;
 
 
 // method decleration
@@ -93,7 +94,8 @@ statement
     | FOR_ OP forControl CP statement                       #StatementFOR
     | WHILE_ parExpression statement                        #StatementWHILE
     | DO_ statement WHILE_ parExpression SC                 #StatementDoWhile
-    | localVariableDeclaration                              #StatementVariableDeclaration
+    | localVariableDeclaration  SC                          #StatementVariableDeclaration
+    | expression SC                                         #StatementExpression
     ;
 
 
@@ -110,7 +112,7 @@ expression
     |  BREAK_  SC                                           #BreakExpression
     |  CONTINUE_ SC                                         #ContinueExpression
     |  literal                                              #ExpressionLiteral
-    |  IDENTIFIER                                           #ExpressionIDENTIFIER
+    |  IDENTIFIER (EQ expression)?                          #ExpressionIDENTIFIER
     ;
 
 expressionList
@@ -124,17 +126,28 @@ literal
 //    | CHAR_LITERAL
     | booleanLiteral      #LiteralBoolean
     | numericLiteral      #LiteralNumeric
+    | charLiteral         #LiteralChar
     | stringLiteral       #LiteralString
-   // | TEXT_BLOCK // Java17
     ;
 
-nullLiteral : NULL_ ;
-booleanLiteral : TRUE_ | FALSE_ ;
-numericLiteral : NUMBER  ;
-stringLiteral
-        : SingleLineString
-        | MultiLineString+
+nullLiteral
+        : NULL_
         ;
+booleanLiteral
+        : TRUE_ | FALSE_
+        ;
+numericLiteral
+        : NUMBER
+        ;
+charLiteral
+        : CHAR_LITERAL
+        ;
+stringLiteral
+        : STRING_LITERAL
+        ;
+//        : SingleLineString
+//        | MultiLineString+
+//        ;
 
 //   type decleration
 
@@ -147,6 +160,7 @@ primitiveType
     | LONG              #LongType
     | FLOAT             #FloatType
     | DOUBLE            #DoubleType
+    | STRING_           #StringType
     ;
 
 //classOrInterfaceType

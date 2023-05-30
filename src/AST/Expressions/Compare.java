@@ -1,7 +1,10 @@
 package AST.Expressions;
 
 public class Compare implements Expression{
-
+    @Override
+    public String getType() {
+        return null;
+    }
 
     Expression ex1,ex2;
     String compareElement;
@@ -32,6 +35,6 @@ public class Compare implements Expression{
 
     @Override
     public String toString() {
-        return  ex1 + compareElement + ex2 ;
+        return  "Compare { "+ex1 + compareElement + ex2 +" }";
     }
 }

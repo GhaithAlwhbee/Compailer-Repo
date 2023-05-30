@@ -16,6 +16,6 @@ public class VariableDeclarationStatement implements Statement{
 
     @Override
     public String toString() {
-        return " " + localVariable + " ";
+        return  localVariable + " ";
     }
 }

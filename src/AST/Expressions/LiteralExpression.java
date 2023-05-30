@@ -7,6 +7,16 @@ public class LiteralExpression implements Expression{
 
     Literal literal;
 
+    String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public Literal getLiteral() {
         return literal;
     }
@@ -17,6 +27,6 @@ public class LiteralExpression implements Expression{
 
     @Override
     public String toString() {
-        return " "+ literal ;
+        return "LiteralExpression: { type: "+type +" "+ literal+ " }";
     }
 }

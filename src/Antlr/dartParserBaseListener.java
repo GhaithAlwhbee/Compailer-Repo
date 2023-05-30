@@ -112,6 +112,18 @@ public class dartParserBaseListener implements dartParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterLocalVariableDeclaration(dartParser.LocalVariableDeclarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLocalVariableDeclaration(dartParser.LocalVariableDeclarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterVariableDeclarators(dartParser.VariableDeclaratorsContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -143,18 +155,6 @@ public class dartParserBaseListener implements dartParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitProgram(dartParser.ProgramContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterLocalVariableDeclaration(dartParser.LocalVariableDeclarationContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitLocalVariableDeclaration(dartParser.LocalVariableDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -275,6 +275,18 @@ public class dartParserBaseListener implements dartParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStatementVariableDeclaration(dartParser.StatementVariableDeclarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStatementExpression(dartParser.StatementExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStatementExpression(dartParser.StatementExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -460,6 +472,18 @@ public class dartParserBaseListener implements dartParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterLiteralChar(dartParser.LiteralCharContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLiteralChar(dartParser.LiteralCharContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterLiteralString(dartParser.LiteralStringContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -503,6 +527,18 @@ public class dartParserBaseListener implements dartParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitNumericLiteral(dartParser.NumericLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCharLiteral(dartParser.CharLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCharLiteral(dartParser.CharLiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -587,6 +623,18 @@ public class dartParserBaseListener implements dartParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDoubleType(dartParser.DoubleTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStringType(dartParser.StringTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStringType(dartParser.StringTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

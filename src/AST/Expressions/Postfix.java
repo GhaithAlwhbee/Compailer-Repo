@@ -1,7 +1,10 @@
 package AST.Expressions;
 
 public class Postfix implements Expression{
-
+    @Override
+    public String getType() {
+        return null;
+    }
 
     Expression ex1  ;
 

@@ -1,9 +1,31 @@
 class person{
 
-int funName(int a , int b){
-int x =10
-bool v = false
+char charcter = 'k';
+String name = "Ghaith";
+
+int funName(int a , bool b){
+
+a = 1000;
+int x = 0;
+int z= 45;
+bool v = false;
+
+for(int i =0 ; i<10 ; i++){
+i--;
 }
+
+}
+
+int funName2 (int c){
+int  a;
+a++;
+}
+
+}
+
+class AbdAlhalem {
+
+int x;
 
 }
 

@@ -6,12 +6,14 @@ public class INT implements primitiveType {
 
     String int_type ;
 
-    public String getInt_type() {
-        return int_type;
+    @Override
+    public void setType(String type) {
+        this.int_type = type;
     }
 
-    public void setInt_type(String int_type) {
-        this.int_type = int_type;
+    @Override
+    public String getType() {
+        return int_type;
     }
 
     @Override

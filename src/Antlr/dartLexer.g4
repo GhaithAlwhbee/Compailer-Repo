@@ -78,6 +78,7 @@ PRIVATE_ : 'private';
 REQUIRED_:'required';
 RETURN_:'return';
 STATIC_:'static';
+STRING_:'String';
 SWITCH_:'switch';
 SYNC_:'sync';
 SUPER_ : 'super';
@@ -102,8 +103,14 @@ CONTAINER_WIDGET : 'Container';
 
 NUMBER : DIGIT+ ( '.' DIGIT+ )? EXPONENT? | '.' DIGIT+ EXPONENT? ;
 
-SingleLineString : StringDQ | StringSQ | 'r\'' ~('\'' | '\n' | '\r')* '\'' | 'r"' ~('"' | '\n' | '\r')* '"' ;
-MultiLineString : '"""' StringContentTDQ*? '"""' | '\'\'\'' StringContentTSQ*? '\'\'\'' | 'r"""' (~'"' | '"' ~'"' | '""' ~'"')* '"""' | 'r\'\'\'' (~'\'' | '\'' ~'\'' | '\'\'' ~'\'')* '\'\'\'' ;
+//CHAR_LITERAL:  '\'' ~[\\r\\n\\'] '\'';
+//
+//SingleLineString : StringDQ | StringSQ | 'r\'' ~('\'' | '\n' | '\r')* '\'' | 'r"' ~('"' | '\n' | '\r')* '"' ;
+//MultiLineString : '"""' StringContentTDQ*? '"""' | '\'\'\'' StringContentTSQ*? '\'\'\'' | 'r"""' (~'"' | '"' ~'"' | '""' ~'"')* '"""' | 'r\'\'\'' (~'\'' | '\'' ~'\'' | '\'\'' ~'\'')* '\'\'\'' ;
+
+CHAR_LITERAL:       '\'' (~['\\\r\n] | EscapeSequence) '\'';
+
+STRING_LITERAL:     '"' (~["\\\r\n] | EscapeSequence)* '"';
 
 IDENTIFIER : IDENTIFIER_START IDENTIFIER_PART* ;
 WHITESPACE : ( '\t' | ' ' | NEWLINE )+  -> skip;
@@ -127,5 +134,13 @@ fragment IDENTIFIER_START : IDENTIFIER_START_NO_DOLLAR | '$' ;
 fragment IDENTIFIER_PART : IDENTIFIER_START | DIGIT ;
 fragment LETTER : 'a' .. 'z' | 'A' .. 'Z' ;
 fragment DIGIT : '0' .. '9' ;
+fragment EscapeSequence
+    : '\\' 'u005c'? [btnfr"'\\]
+    | '\\' 'u005c'? ([0-3]? [0-7])? [0-7]
+    | '\\' 'u'+ HexDigit HexDigit HexDigit HexDigit
+    ;
+fragment HexDigit
+    : [0-9a-fA-F]
+    ;
 
 
