@@ -18,4 +18,9 @@ public class VariableDeclarationStatement implements Statement{
     public String toString() {
         return  localVariable + " ";
     }
+
+    @Override
+    public String toHtml() {
+        return null;
+    }
 }

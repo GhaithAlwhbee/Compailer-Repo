@@ -48,6 +48,13 @@ public interface dartParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVariableDeclarationClassBody(dartParser.VariableDeclarationClassBodyContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ConstructorDeclarationClassBody}
+	 * labeled alternative in {@link dartParser#classBodyDeclaration}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitConstructorDeclarationClassBody(dartParser.ConstructorDeclarationClassBodyContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code MethodDeclarationClassBody}
 	 * labeled alternative in {@link dartParser#classBodyDeclaration}.
 	 * @param ctx the parse tree
@@ -61,6 +68,18 @@ public interface dartParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitClassDeclarationClassBody(dartParser.ClassDeclarationClassBodyContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link dartParser#constructorDeclaration}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitConstructorDeclaration(dartParser.ConstructorDeclarationContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link dartParser#constructorCall}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitConstructorCall(dartParser.ConstructorCallContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link dartParser#localVariableDeclaration}.
 	 * @param ctx the parse tree
@@ -91,12 +110,6 @@ public interface dartParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitMethodDeclaration(dartParser.MethodDeclarationContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link dartParser#methodBody}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMethodBody(dartParser.MethodBodyContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link dartParser#formalParameters}.
 	 * @param ctx the parse tree
@@ -152,6 +165,13 @@ public interface dartParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatementVariableDeclaration(dartParser.StatementVariableDeclarationContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code StatementWidget}
+	 * labeled alternative in {@link dartParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStatementWidget(dartParser.StatementWidgetContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code StatementExpression}
 	 * labeled alternative in {@link dartParser#statement}.
 	 * @param ctx the parse tree
@@ -159,26 +179,12 @@ public interface dartParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatementExpression(dartParser.StatementExpressionContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ReturnExpression}
+	 * Visit a parse tree produced by the {@code ExpressionConstructorCall}
 	 * labeled alternative in {@link dartParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitReturnExpression(dartParser.ReturnExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ExpressionPlusExpression}
-	 * labeled alternative in {@link dartParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExpressionPlusExpression(dartParser.ExpressionPlusExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ContinueExpression}
-	 * labeled alternative in {@link dartParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitContinueExpression(dartParser.ContinueExpressionContext ctx);
+	T visitExpressionConstructorCall(dartParser.ExpressionConstructorCallContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ExpressionPostfix}
 	 * labeled alternative in {@link dartParser#expression}.
@@ -208,13 +214,6 @@ public interface dartParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExpressionMultiplyExpression(dartParser.ExpressionMultiplyExpressionContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ExpressionLiteral}
-	 * labeled alternative in {@link dartParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExpressionLiteral(dartParser.ExpressionLiteralContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code BreakExpression}
 	 * labeled alternative in {@link dartParser#expression}.
 	 * @param ctx the parse tree
@@ -235,6 +234,41 @@ public interface dartParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitExpressionIDENTIFIER(dartParser.ExpressionIDENTIFIERContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ReturnExpression}
+	 * labeled alternative in {@link dartParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReturnExpression(dartParser.ReturnExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ExpressionPlusExpression}
+	 * labeled alternative in {@link dartParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpressionPlusExpression(dartParser.ExpressionPlusExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ContinueExpression}
+	 * labeled alternative in {@link dartParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitContinueExpression(dartParser.ContinueExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ExpressionWidget}
+	 * labeled alternative in {@link dartParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpressionWidget(dartParser.ExpressionWidgetContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ExpressionLiteral}
+	 * labeled alternative in {@link dartParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpressionLiteral(dartParser.ExpressionLiteralContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link dartParser#expressionList}.
 	 * @param ctx the parse tree
@@ -356,6 +390,20 @@ public interface dartParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStringType(dartParser.StringTypeContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code VoidType}
+	 * labeled alternative in {@link dartParser#primitiveType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVoidType(dartParser.VoidTypeContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code WidgetType}
+	 * labeled alternative in {@link dartParser#primitiveType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWidgetType(dartParser.WidgetTypeContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link dartParser#block}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -398,33 +446,256 @@ public interface dartParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitQualifiedName(dartParser.QualifiedNameContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link dartParser#scaffold}.
+	 * Visit a parse tree produced by {@link dartParser#app}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitScaffold(dartParser.ScaffoldContext ctx);
+	T visitApp(dartParser.AppContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link dartParser#widget}.
+	 * Visit a parse tree produced by the {@code APPBAR_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitWidget(dartParser.WidgetContext ctx);
+	T visitAPPBAR_Widget(dartParser.APPBAR_WidgetContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link dartParser#appBar}.
+	 * Visit a parse tree produced by the {@code BUTTON_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAppBar(dartParser.AppBarContext ctx);
+	T visitBUTTON_Widget(dartParser.BUTTON_WidgetContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link dartParser#text}.
+	 * Visit a parse tree produced by the {@code CENTER_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitText(dartParser.TextContext ctx);
+	T visitCENTER_Widget(dartParser.CENTER_WidgetContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link dartParser#container}.
+	 * Visit a parse tree produced by the {@code CONTAINER_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitContainer(dartParser.ContainerContext ctx);
+	T visitCONTAINER_Widget(dartParser.CONTAINER_WidgetContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code COLUMN_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCOLUMN_Widget(dartParser.COLUMN_WidgetContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ELEVATEDBUTTON_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitELEVATEDBUTTON_Widget(dartParser.ELEVATEDBUTTON_WidgetContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code IMAGE_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIMAGE_Widget(dartParser.IMAGE_WidgetContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code LISTVIEW_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLISTVIEW_Widget(dartParser.LISTVIEW_WidgetContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code MATERIALAPP_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMATERIALAPP_Widget(dartParser.MATERIALAPP_WidgetContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code MATERIALPAGEROUTE_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMATERIALPAGEROUTE_Widget(dartParser.MATERIALPAGEROUTE_WidgetContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code NAVIGATOR_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNAVIGATOR_Widget(dartParser.NAVIGATOR_WidgetContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ROW_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitROW_Widget(dartParser.ROW_WidgetContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code SCAFFOLD_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSCAFFOLD_Widget(dartParser.SCAFFOLD_WidgetContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code TEXT_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTEXT_Widget(dartParser.TEXT_WidgetContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link dartParser#properties}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitProperties(dartParser.PropertiesContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code APPBAR_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAPPBAR_PROPERTY(dartParser.APPBAR_PROPERTYContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BODY_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBODY_PROPERTY(dartParser.BODY_PROPERTYContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BUILDER_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBUILDER_PROPERTY(dartParser.BUILDER_PROPERTYContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code CHILD_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCHILD_PROPERTY(dartParser.CHILD_PROPERTYContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code CHILDREN_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCHILDREN_PROPERTY(dartParser.CHILDREN_PROPERTYContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code COLOR_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCOLOR_PROPERTY(dartParser.COLOR_PROPERTYContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code FLOATINGACTIONBUTTON_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFLOATINGACTIONBUTTON_PROPERTY(dartParser.FLOATINGACTIONBUTTON_PROPERTYContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code HOME_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitHOME_PROPERTY(dartParser.HOME_PROPERTYContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code IMAGE_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIMAGE_PROPERTY(dartParser.IMAGE_PROPERTYContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ONPRESSED_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitONPRESSED_PROPERTY(dartParser.ONPRESSED_PROPERTYContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code PADDING_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPADDING_PROPERTY(dartParser.PADDING_PROPERTYContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code TEXT_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTEXT_PROPERTY(dartParser.TEXT_PROPERTYContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code TITLE_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTITLE_PROPERTY(dartParser.TITLE_PROPERTYContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code TITLE_PROPERTY_MATERIALAPP}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTITLE_PROPERTY_MATERIALAPP(dartParser.TITLE_PROPERTY_MATERIALAPPContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code IDENTIFIER_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIDENTIFIER_PROPERTY(dartParser.IDENTIFIER_PROPERTYContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link dartParser#child_widgets}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitChild_widgets(dartParser.Child_widgetsContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ReturnOwnStatement}
+	 * labeled alternative in {@link dartParser#anonymousFunction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReturnOwnStatement(dartParser.ReturnOwnStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ReturnMultiStatement}
+	 * labeled alternative in {@link dartParser#anonymousFunction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReturnMultiStatement(dartParser.ReturnMultiStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link dartParser#navigatorFunction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNavigatorFunction(dartParser.NavigatorFunctionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link dartParser#materialPageRoute}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMaterialPageRoute(dartParser.MaterialPageRouteContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link dartParser#context}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitContext(dartParser.ContextContext ctx);
 }

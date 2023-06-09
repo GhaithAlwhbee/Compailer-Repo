@@ -19,4 +19,12 @@ public class MethodClassBody implements ClassBody{
     public String toString() {
         return " "+ methodDeclaration ;
     }
+
+    @Override
+    public String toHtml() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append(methodDeclaration.toHtml());
+        return stringBuilder.toString();
+    }
 }

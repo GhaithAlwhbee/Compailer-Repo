@@ -18,4 +18,12 @@ public class ExpressionStatement implements Statement{
     public String toString() {
         return "ExpressionStatement=" + expression ;
     }
+
+    @Override
+    public String toHtml() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+            stringBuilder.append(expression.toHtml());
+        return stringBuilder.toString();
+    }
 }

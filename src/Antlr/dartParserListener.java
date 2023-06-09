@@ -70,6 +70,18 @@ public interface dartParserListener extends ParseTreeListener {
 	 */
 	void exitVariableDeclarationClassBody(dartParser.VariableDeclarationClassBodyContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ConstructorDeclarationClassBody}
+	 * labeled alternative in {@link dartParser#classBodyDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterConstructorDeclarationClassBody(dartParser.ConstructorDeclarationClassBodyContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ConstructorDeclarationClassBody}
+	 * labeled alternative in {@link dartParser#classBodyDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitConstructorDeclarationClassBody(dartParser.ConstructorDeclarationClassBodyContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code MethodDeclarationClassBody}
 	 * labeled alternative in {@link dartParser#classBodyDeclaration}.
 	 * @param ctx the parse tree
@@ -93,6 +105,26 @@ public interface dartParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitClassDeclarationClassBody(dartParser.ClassDeclarationClassBodyContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link dartParser#constructorDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterConstructorDeclaration(dartParser.ConstructorDeclarationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link dartParser#constructorDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitConstructorDeclaration(dartParser.ConstructorDeclarationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link dartParser#constructorCall}.
+	 * @param ctx the parse tree
+	 */
+	void enterConstructorCall(dartParser.ConstructorCallContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link dartParser#constructorCall}.
+	 * @param ctx the parse tree
+	 */
+	void exitConstructorCall(dartParser.ConstructorCallContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link dartParser#localVariableDeclaration}.
 	 * @param ctx the parse tree
@@ -143,16 +175,6 @@ public interface dartParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitMethodDeclaration(dartParser.MethodDeclarationContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link dartParser#methodBody}.
-	 * @param ctx the parse tree
-	 */
-	void enterMethodBody(dartParser.MethodBodyContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link dartParser#methodBody}.
-	 * @param ctx the parse tree
-	 */
-	void exitMethodBody(dartParser.MethodBodyContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link dartParser#formalParameters}.
 	 * @param ctx the parse tree
@@ -246,6 +268,18 @@ public interface dartParserListener extends ParseTreeListener {
 	 */
 	void exitStatementVariableDeclaration(dartParser.StatementVariableDeclarationContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code StatementWidget}
+	 * labeled alternative in {@link dartParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterStatementWidget(dartParser.StatementWidgetContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code StatementWidget}
+	 * labeled alternative in {@link dartParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitStatementWidget(dartParser.StatementWidgetContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code StatementExpression}
 	 * labeled alternative in {@link dartParser#statement}.
 	 * @param ctx the parse tree
@@ -258,41 +292,17 @@ public interface dartParserListener extends ParseTreeListener {
 	 */
 	void exitStatementExpression(dartParser.StatementExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ReturnExpression}
+	 * Enter a parse tree produced by the {@code ExpressionConstructorCall}
 	 * labeled alternative in {@link dartParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterReturnExpression(dartParser.ReturnExpressionContext ctx);
+	void enterExpressionConstructorCall(dartParser.ExpressionConstructorCallContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code ReturnExpression}
+	 * Exit a parse tree produced by the {@code ExpressionConstructorCall}
 	 * labeled alternative in {@link dartParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitReturnExpression(dartParser.ReturnExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ExpressionPlusExpression}
-	 * labeled alternative in {@link dartParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterExpressionPlusExpression(dartParser.ExpressionPlusExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ExpressionPlusExpression}
-	 * labeled alternative in {@link dartParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitExpressionPlusExpression(dartParser.ExpressionPlusExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ContinueExpression}
-	 * labeled alternative in {@link dartParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterContinueExpression(dartParser.ContinueExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ContinueExpression}
-	 * labeled alternative in {@link dartParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitContinueExpression(dartParser.ContinueExpressionContext ctx);
+	void exitExpressionConstructorCall(dartParser.ExpressionConstructorCallContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ExpressionPostfix}
 	 * labeled alternative in {@link dartParser#expression}.
@@ -342,18 +352,6 @@ public interface dartParserListener extends ParseTreeListener {
 	 */
 	void exitExpressionMultiplyExpression(dartParser.ExpressionMultiplyExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ExpressionLiteral}
-	 * labeled alternative in {@link dartParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterExpressionLiteral(dartParser.ExpressionLiteralContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ExpressionLiteral}
-	 * labeled alternative in {@link dartParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitExpressionLiteral(dartParser.ExpressionLiteralContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code BreakExpression}
 	 * labeled alternative in {@link dartParser#expression}.
 	 * @param ctx the parse tree
@@ -389,6 +387,66 @@ public interface dartParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExpressionIDENTIFIER(dartParser.ExpressionIDENTIFIERContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ReturnExpression}
+	 * labeled alternative in {@link dartParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterReturnExpression(dartParser.ReturnExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ReturnExpression}
+	 * labeled alternative in {@link dartParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitReturnExpression(dartParser.ReturnExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ExpressionPlusExpression}
+	 * labeled alternative in {@link dartParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpressionPlusExpression(dartParser.ExpressionPlusExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ExpressionPlusExpression}
+	 * labeled alternative in {@link dartParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpressionPlusExpression(dartParser.ExpressionPlusExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ContinueExpression}
+	 * labeled alternative in {@link dartParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterContinueExpression(dartParser.ContinueExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ContinueExpression}
+	 * labeled alternative in {@link dartParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitContinueExpression(dartParser.ContinueExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ExpressionWidget}
+	 * labeled alternative in {@link dartParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpressionWidget(dartParser.ExpressionWidgetContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ExpressionWidget}
+	 * labeled alternative in {@link dartParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpressionWidget(dartParser.ExpressionWidgetContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ExpressionLiteral}
+	 * labeled alternative in {@link dartParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpressionLiteral(dartParser.ExpressionLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ExpressionLiteral}
+	 * labeled alternative in {@link dartParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpressionLiteral(dartParser.ExpressionLiteralContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link dartParser#expressionList}.
 	 * @param ctx the parse tree
@@ -594,6 +652,30 @@ public interface dartParserListener extends ParseTreeListener {
 	 */
 	void exitStringType(dartParser.StringTypeContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code VoidType}
+	 * labeled alternative in {@link dartParser#primitiveType}.
+	 * @param ctx the parse tree
+	 */
+	void enterVoidType(dartParser.VoidTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code VoidType}
+	 * labeled alternative in {@link dartParser#primitiveType}.
+	 * @param ctx the parse tree
+	 */
+	void exitVoidType(dartParser.VoidTypeContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code WidgetType}
+	 * labeled alternative in {@link dartParser#primitiveType}.
+	 * @param ctx the parse tree
+	 */
+	void enterWidgetType(dartParser.WidgetTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code WidgetType}
+	 * labeled alternative in {@link dartParser#primitiveType}.
+	 * @param ctx the parse tree
+	 */
+	void exitWidgetType(dartParser.WidgetTypeContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link dartParser#block}.
 	 * @param ctx the parse tree
 	 */
@@ -664,53 +746,435 @@ public interface dartParserListener extends ParseTreeListener {
 	 */
 	void exitQualifiedName(dartParser.QualifiedNameContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link dartParser#scaffold}.
+	 * Enter a parse tree produced by {@link dartParser#app}.
 	 * @param ctx the parse tree
 	 */
-	void enterScaffold(dartParser.ScaffoldContext ctx);
+	void enterApp(dartParser.AppContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link dartParser#scaffold}.
+	 * Exit a parse tree produced by {@link dartParser#app}.
 	 * @param ctx the parse tree
 	 */
-	void exitScaffold(dartParser.ScaffoldContext ctx);
+	void exitApp(dartParser.AppContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link dartParser#widget}.
+	 * Enter a parse tree produced by the {@code APPBAR_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
 	 * @param ctx the parse tree
 	 */
-	void enterWidget(dartParser.WidgetContext ctx);
+	void enterAPPBAR_Widget(dartParser.APPBAR_WidgetContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link dartParser#widget}.
+	 * Exit a parse tree produced by the {@code APPBAR_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
 	 * @param ctx the parse tree
 	 */
-	void exitWidget(dartParser.WidgetContext ctx);
+	void exitAPPBAR_Widget(dartParser.APPBAR_WidgetContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link dartParser#appBar}.
+	 * Enter a parse tree produced by the {@code BUTTON_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
 	 * @param ctx the parse tree
 	 */
-	void enterAppBar(dartParser.AppBarContext ctx);
+	void enterBUTTON_Widget(dartParser.BUTTON_WidgetContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link dartParser#appBar}.
+	 * Exit a parse tree produced by the {@code BUTTON_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
 	 * @param ctx the parse tree
 	 */
-	void exitAppBar(dartParser.AppBarContext ctx);
+	void exitBUTTON_Widget(dartParser.BUTTON_WidgetContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link dartParser#text}.
+	 * Enter a parse tree produced by the {@code CENTER_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
 	 * @param ctx the parse tree
 	 */
-	void enterText(dartParser.TextContext ctx);
+	void enterCENTER_Widget(dartParser.CENTER_WidgetContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link dartParser#text}.
+	 * Exit a parse tree produced by the {@code CENTER_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
 	 * @param ctx the parse tree
 	 */
-	void exitText(dartParser.TextContext ctx);
+	void exitCENTER_Widget(dartParser.CENTER_WidgetContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link dartParser#container}.
+	 * Enter a parse tree produced by the {@code CONTAINER_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
 	 * @param ctx the parse tree
 	 */
-	void enterContainer(dartParser.ContainerContext ctx);
+	void enterCONTAINER_Widget(dartParser.CONTAINER_WidgetContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link dartParser#container}.
+	 * Exit a parse tree produced by the {@code CONTAINER_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
 	 * @param ctx the parse tree
 	 */
-	void exitContainer(dartParser.ContainerContext ctx);
+	void exitCONTAINER_Widget(dartParser.CONTAINER_WidgetContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code COLUMN_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 */
+	void enterCOLUMN_Widget(dartParser.COLUMN_WidgetContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code COLUMN_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 */
+	void exitCOLUMN_Widget(dartParser.COLUMN_WidgetContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ELEVATEDBUTTON_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 */
+	void enterELEVATEDBUTTON_Widget(dartParser.ELEVATEDBUTTON_WidgetContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ELEVATEDBUTTON_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 */
+	void exitELEVATEDBUTTON_Widget(dartParser.ELEVATEDBUTTON_WidgetContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code IMAGE_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 */
+	void enterIMAGE_Widget(dartParser.IMAGE_WidgetContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IMAGE_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 */
+	void exitIMAGE_Widget(dartParser.IMAGE_WidgetContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code LISTVIEW_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 */
+	void enterLISTVIEW_Widget(dartParser.LISTVIEW_WidgetContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code LISTVIEW_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 */
+	void exitLISTVIEW_Widget(dartParser.LISTVIEW_WidgetContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code MATERIALAPP_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 */
+	void enterMATERIALAPP_Widget(dartParser.MATERIALAPP_WidgetContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code MATERIALAPP_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 */
+	void exitMATERIALAPP_Widget(dartParser.MATERIALAPP_WidgetContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code MATERIALPAGEROUTE_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 */
+	void enterMATERIALPAGEROUTE_Widget(dartParser.MATERIALPAGEROUTE_WidgetContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code MATERIALPAGEROUTE_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 */
+	void exitMATERIALPAGEROUTE_Widget(dartParser.MATERIALPAGEROUTE_WidgetContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code NAVIGATOR_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 */
+	void enterNAVIGATOR_Widget(dartParser.NAVIGATOR_WidgetContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code NAVIGATOR_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 */
+	void exitNAVIGATOR_Widget(dartParser.NAVIGATOR_WidgetContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ROW_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 */
+	void enterROW_Widget(dartParser.ROW_WidgetContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ROW_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 */
+	void exitROW_Widget(dartParser.ROW_WidgetContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code SCAFFOLD_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 */
+	void enterSCAFFOLD_Widget(dartParser.SCAFFOLD_WidgetContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code SCAFFOLD_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 */
+	void exitSCAFFOLD_Widget(dartParser.SCAFFOLD_WidgetContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code TEXT_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 */
+	void enterTEXT_Widget(dartParser.TEXT_WidgetContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code TEXT_Widget}
+	 * labeled alternative in {@link dartParser#widget}.
+	 * @param ctx the parse tree
+	 */
+	void exitTEXT_Widget(dartParser.TEXT_WidgetContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link dartParser#properties}.
+	 * @param ctx the parse tree
+	 */
+	void enterProperties(dartParser.PropertiesContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link dartParser#properties}.
+	 * @param ctx the parse tree
+	 */
+	void exitProperties(dartParser.PropertiesContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code APPBAR_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void enterAPPBAR_PROPERTY(dartParser.APPBAR_PROPERTYContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code APPBAR_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void exitAPPBAR_PROPERTY(dartParser.APPBAR_PROPERTYContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BODY_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void enterBODY_PROPERTY(dartParser.BODY_PROPERTYContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BODY_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void exitBODY_PROPERTY(dartParser.BODY_PROPERTYContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BUILDER_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void enterBUILDER_PROPERTY(dartParser.BUILDER_PROPERTYContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BUILDER_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void exitBUILDER_PROPERTY(dartParser.BUILDER_PROPERTYContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code CHILD_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void enterCHILD_PROPERTY(dartParser.CHILD_PROPERTYContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code CHILD_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void exitCHILD_PROPERTY(dartParser.CHILD_PROPERTYContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code CHILDREN_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void enterCHILDREN_PROPERTY(dartParser.CHILDREN_PROPERTYContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code CHILDREN_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void exitCHILDREN_PROPERTY(dartParser.CHILDREN_PROPERTYContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code COLOR_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void enterCOLOR_PROPERTY(dartParser.COLOR_PROPERTYContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code COLOR_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void exitCOLOR_PROPERTY(dartParser.COLOR_PROPERTYContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code FLOATINGACTIONBUTTON_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void enterFLOATINGACTIONBUTTON_PROPERTY(dartParser.FLOATINGACTIONBUTTON_PROPERTYContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code FLOATINGACTIONBUTTON_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void exitFLOATINGACTIONBUTTON_PROPERTY(dartParser.FLOATINGACTIONBUTTON_PROPERTYContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code HOME_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void enterHOME_PROPERTY(dartParser.HOME_PROPERTYContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code HOME_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void exitHOME_PROPERTY(dartParser.HOME_PROPERTYContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code IMAGE_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void enterIMAGE_PROPERTY(dartParser.IMAGE_PROPERTYContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IMAGE_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void exitIMAGE_PROPERTY(dartParser.IMAGE_PROPERTYContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ONPRESSED_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void enterONPRESSED_PROPERTY(dartParser.ONPRESSED_PROPERTYContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ONPRESSED_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void exitONPRESSED_PROPERTY(dartParser.ONPRESSED_PROPERTYContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code PADDING_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void enterPADDING_PROPERTY(dartParser.PADDING_PROPERTYContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code PADDING_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void exitPADDING_PROPERTY(dartParser.PADDING_PROPERTYContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code TEXT_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void enterTEXT_PROPERTY(dartParser.TEXT_PROPERTYContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code TEXT_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void exitTEXT_PROPERTY(dartParser.TEXT_PROPERTYContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code TITLE_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void enterTITLE_PROPERTY(dartParser.TITLE_PROPERTYContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code TITLE_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void exitTITLE_PROPERTY(dartParser.TITLE_PROPERTYContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code TITLE_PROPERTY_MATERIALAPP}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void enterTITLE_PROPERTY_MATERIALAPP(dartParser.TITLE_PROPERTY_MATERIALAPPContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code TITLE_PROPERTY_MATERIALAPP}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void exitTITLE_PROPERTY_MATERIALAPP(dartParser.TITLE_PROPERTY_MATERIALAPPContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code IDENTIFIER_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void enterIDENTIFIER_PROPERTY(dartParser.IDENTIFIER_PROPERTYContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IDENTIFIER_PROPERTY}
+	 * labeled alternative in {@link dartParser#property}.
+	 * @param ctx the parse tree
+	 */
+	void exitIDENTIFIER_PROPERTY(dartParser.IDENTIFIER_PROPERTYContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link dartParser#child_widgets}.
+	 * @param ctx the parse tree
+	 */
+	void enterChild_widgets(dartParser.Child_widgetsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link dartParser#child_widgets}.
+	 * @param ctx the parse tree
+	 */
+	void exitChild_widgets(dartParser.Child_widgetsContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ReturnOwnStatement}
+	 * labeled alternative in {@link dartParser#anonymousFunction}.
+	 * @param ctx the parse tree
+	 */
+	void enterReturnOwnStatement(dartParser.ReturnOwnStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ReturnOwnStatement}
+	 * labeled alternative in {@link dartParser#anonymousFunction}.
+	 * @param ctx the parse tree
+	 */
+	void exitReturnOwnStatement(dartParser.ReturnOwnStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ReturnMultiStatement}
+	 * labeled alternative in {@link dartParser#anonymousFunction}.
+	 * @param ctx the parse tree
+	 */
+	void enterReturnMultiStatement(dartParser.ReturnMultiStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ReturnMultiStatement}
+	 * labeled alternative in {@link dartParser#anonymousFunction}.
+	 * @param ctx the parse tree
+	 */
+	void exitReturnMultiStatement(dartParser.ReturnMultiStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link dartParser#navigatorFunction}.
+	 * @param ctx the parse tree
+	 */
+	void enterNavigatorFunction(dartParser.NavigatorFunctionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link dartParser#navigatorFunction}.
+	 * @param ctx the parse tree
+	 */
+	void exitNavigatorFunction(dartParser.NavigatorFunctionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link dartParser#materialPageRoute}.
+	 * @param ctx the parse tree
+	 */
+	void enterMaterialPageRoute(dartParser.MaterialPageRouteContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link dartParser#materialPageRoute}.
+	 * @param ctx the parse tree
+	 */
+	void exitMaterialPageRoute(dartParser.MaterialPageRouteContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link dartParser#context}.
+	 * @param ctx the parse tree
+	 */
+	void enterContext(dartParser.ContextContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link dartParser#context}.
+	 * @param ctx the parse tree
+	 */
+	void exitContext(dartParser.ContextContext ctx);
 }

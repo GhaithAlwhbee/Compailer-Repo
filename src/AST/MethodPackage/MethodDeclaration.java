@@ -66,4 +66,15 @@ public class MethodDeclaration {
         stringBuilder.append("}");
         return stringBuilder.toString();
     }
+
+    public String toHtml() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (Statement statement1 :
+                statement) {
+            stringBuilder.append(statement1.toHtml());
+        }
+        return stringBuilder.toString();
+    }
+
 }

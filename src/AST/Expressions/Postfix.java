@@ -1,9 +1,16 @@
 package AST.Expressions;
 
 public class Postfix implements Expression{
+
+    String type;
+    @Override
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public String getType() {
-        return null;
+        return type;
     }
 
     Expression ex1  ;
@@ -29,5 +36,10 @@ public class Postfix implements Expression{
     @Override
     public String toString() {
         return  ex1 +" Postfix : " + postfixSymbol ;
+    }
+
+    @Override
+    public String toHtml() {
+        return null;
     }
 }

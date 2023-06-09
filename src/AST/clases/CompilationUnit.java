@@ -26,4 +26,23 @@ public class CompilationUnit {
         stringBuilder.append(" }");
         return stringBuilder.toString();
     }
+
+    public String toHtml()
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<!DOCTYPE html>\n");
+        stringBuilder.append("<html>\n");
+        stringBuilder.append("<head>\n");
+        stringBuilder.append("    <title>"+"Material app"+"</title>\n" );
+        stringBuilder.append("</head>\n");
+        stringBuilder.append("<body>\n");
+        for (ClassDeclaration child : this.classDeclaration) {
+            stringBuilder.append(child.toHtml());
+            stringBuilder.append("\n");
+        }
+
+        stringBuilder.append("</body>\n");
+        stringBuilder.append("</html>");
+        return stringBuilder.toString();
+    }
 }

@@ -1,0 +1,38 @@
+class FirstPage {
+  Widget build() {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(text:"First Page"),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          child: Text(text:"Go to Second Page"),
+          onPressed: () {
+            Navigator.push(
+              MaterialPageRoute(
+                builder: () => SecondPage(data: "Hello from First Page!");
+              )
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class SecondPage{
+  String data;
+
+  SecondPage({ required this.data}) ;
+
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(text:"Second Page"),
+      ),
+      body: Center(
+        child: Text(data),
+      ),
+    );
+  }
+}

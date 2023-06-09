@@ -21,4 +21,12 @@ public class VariableClassBody implements ClassBody {
                 "localVar=" + localVar +
                 '}';
     }
+
+    @Override
+    public String toHtml() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(localVar.toHtml());
+
+        return stringBuilder.toString();
+    }
 }

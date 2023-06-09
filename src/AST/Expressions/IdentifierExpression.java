@@ -4,13 +4,19 @@ import AST.Statements.Statement;
 
 public class IdentifierExpression implements Expression{
 
+    String type;
     String value;
 
     Expression expression;
 
+    public void setType(String type)
+    {
+        this.type = type;
+    }
+
     @Override
     public String getType() {
-        return null;
+        return type;
     }
 
     public Expression getExpression() {
@@ -40,7 +46,13 @@ public class IdentifierExpression implements Expression{
         {
             stringBuilder.append(" , expression=" + expression + " }");
         }
+        else stringBuilder.append(" } " );
 
         return stringBuilder.toString();
+    }
+
+    @Override
+    public String toHtml() {
+        return value;
     }
 }

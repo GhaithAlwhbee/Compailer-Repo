@@ -29,4 +29,9 @@ public class LiteralExpression implements Expression{
     public String toString() {
         return "LiteralExpression: { type: "+type +" "+ literal+ " }";
     }
+
+    @Override
+    public String toHtml() {
+        return null;
+    }
 }

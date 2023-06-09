@@ -40,4 +40,13 @@ public class ClassDeclaration {
         stringBuilder.append(" }");
         return stringBuilder.toString();
     }
+
+    public String toHtml() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (ClassBody classBody :
+                classBodyArrayList) {
+            stringBuilder.append(classBody.toHtml());
+        }
+        return stringBuilder.toString();
+    }
 }

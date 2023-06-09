@@ -1,6 +1,7 @@
 lexer grammar dartLexer;
 
 AT:'@';
+ARROW:'=>';
 C: ',';
 CB: ']';
 CBC: '}';
@@ -92,14 +93,48 @@ WHILE_:'while';
 
 ///////////////////////////// flutter
 
-Scaffold_WIDGET : 'Scaffold';
-APPBAR_HEAD : 'appBar';
-BODY_HEAD : 'body';
-CHILD_HEAD : 'child';
-APPBAR_WIDGET : 'AppBar';
-TITLE : 'title';
-TEXT_WIDGET : 'Text';
-CONTAINER_WIDGET : 'Container';
+APPBAR:               'AppBar';
+BUTTON:               'Button';
+COLOR :               '#' [a-fA-F0-9]+; // 'ff';//{6}
+CONTAINER :           'Container';
+COLUMN:               'Column';
+CENTER:               'Center';
+ELEVATEDBUTTON:       'ElevatedButton';
+FLOATINGACTIONBUTTON: 'FloatingActionButton';
+IMAGE:                'Image';
+LISTVIEW:             'ListView';
+MATERIALAPP:          'MaterialApp';
+MATERIALPAGEROUTE:    'MaterialPageRoute';
+ROW:                  'Row';
+SCAFFOLD:             'Scaffold';
+TEXT:                 'Text';
+WIDGET:               'Widget';
+
+//// start Navigator
+
+NAVIGATOR:            'Navigator';
+PUSH:                 'push';
+CONTEXT:              'context';
+
+//// start property
+
+APPBAR_PROPERTY:                'appBar:';
+BODY_PROPERTY:                  'body:';
+BUILDER_PROPERTY:               'builder:';
+CHILD_PROPERTY:                 'child:';
+CHILDREN_PROPERTY:              'children:';
+COLOR_PROPERTY:                 'color:';
+FLOATINGACTIONBUTTON_PROPERTY:  'floatingActionButton:';
+HOME_PROPERTY:                  'home:';
+IMAGE_PROPERTY:                 'image:';
+ONPRESSED_PROPERTY:             'onPressed:';
+PADDING_PROPERTY:               'padding:';
+TEXT_PROPERTY:                  'text:';
+TITLE_PROPERTY:                 'title:';
+
+//// End property
+
+//////////////////////////////////
 
 NUMBER : DIGIT+ ( '.' DIGIT+ )? EXPONENT? | '.' DIGIT+ EXPONENT? ;
 
@@ -118,12 +153,12 @@ SINGLE_LINE_COMMENT : '//' ~[\r\n]* -> skip ;
 MULTI_LINE_COMMENT : '/*' ( MULTI_LINE_COMMENT | . )*? '*/'  -> skip ;
 
 fragment EXPONENT : ( '+' | '-' )? DIGIT+ ;
-fragment StringDQ : '"' StringContentDQ*? '"' ;
-fragment StringContentDQ : ~('\\' | '"' | '\n' | '\r' | '$') | '\\' ~('\n' | '\r') | StringDQ | '${' StringContentDQ*? '}' | '$'  ; // { CheckNotOpenBrace() }?
-fragment StringSQ : '\'' StringContentSQ*? '\'' ;
-fragment StringContentSQ : ~('\\' | '\'' | '\n' | '\r' | '$') | '\\' ~('\n' | '\r') | StringSQ | '${' StringContentSQ*? '}' | '$'  ; // { CheckNotOpenBrace() }?
-fragment StringContentTDQ : ~('\\' | '"') | '"' ~'"' | '""' ~'"' ;
-fragment StringContentTSQ : '\'' ~'\'' | '\'\'' ~'\'' | . ;
+//fragment StringDQ : '"' StringContentDQ*? '"' ;
+//fragment StringContentDQ : ~('\\' | '"' | '\n' | '\r' | '$') | '\\' ~('\n' | '\r') | StringDQ | '${' StringContentDQ*? '}' | '$'  ; // { CheckNotOpenBrace() }?
+//fragment StringSQ : '\'' StringContentSQ*? '\'' ;
+//fragment StringContentSQ : ~('\\' | '\'' | '\n' | '\r' | '$') | '\\' ~('\n' | '\r') | StringSQ | '${' StringContentSQ*? '}' | '$'  ; // { CheckNotOpenBrace() }?
+//fragment StringContentTDQ : ~('\\' | '"') | '"' ~'"' | '""' ~'"' ;
+//fragment StringContentTSQ : '\'' ~'\'' | '\'\'' ~'\'' | . ;
 fragment NEWLINE : '\n' | '\r' | '\r\n' ;
 fragment BUILT_IN_IDENTIFIER : 'abstract' | 'dynamic' | 'Function' | 'implements' | 'import' | 'interface' | 'late' | 'required' | 'static'  ;
 fragment OTHER_IDENTIFIER : 'async' | 'sync' | 'await'  ;

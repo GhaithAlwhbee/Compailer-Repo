@@ -1,32 +1,26 @@
-class person{
-
-char charcter = 'k';
-String name = "Ghaith";
-
-int funName(int a , bool b){
-
-a = 1000;
-int x = 0;
-int z= 45;
-bool v = false;
-
-for(int i =0 ; i<10 ; i++){
-i--;
+class Page2 {
+  Widget build() {
+    return Scaffold(
+      appBar: AppBar(title: Text(text:"Page 2")),
+      body: Center(child: Text(text:"Welcome to page 2!")),
+    );
+  }
 }
 
-}
-
-int funName2 (int c){
-int  a;
-a++;
-}
-
-}
-
-class AbdAlhalem {
-
-int x;
-
+class Page1{
+Widget build() {
+    return Scaffold(
+      appBar: AppBar(title: Text(text: "Page 1")),
+      body: Center(
+        child: ElevatedButton(
+          child: Text(text: "Go to Page 2"),
+          onPressed: () {
+          Navigator.push(MaterialPageRoute(builder: () => Page2();));
+          },
+        ),
+      ),
+    );
+  }
 }
 
 

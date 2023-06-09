@@ -1,9 +1,20 @@
 package AST.Expressions;
 
 public class betweenBrackets implements Expression{
+    String type;
+    @Override
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toHtml() {
+        return null;
+    }
+
     @Override
     public String getType() {
-        return null;
+        return type;
     }
 
     Expression ex1 ;

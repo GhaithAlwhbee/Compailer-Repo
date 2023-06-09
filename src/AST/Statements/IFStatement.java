@@ -21,6 +21,11 @@ public class IFStatement implements Statement{
         return statement1;
     }
 
+    @Override
+    public String toHtml() {
+        return null;
+    }
+
     public void setStatement1(Statement statement1) {
         this.statement1 = statement1;
     }

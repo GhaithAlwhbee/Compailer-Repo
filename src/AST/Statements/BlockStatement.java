@@ -28,4 +28,9 @@ public class BlockStatement implements Statement{
 
         return stringBuilder.toString();
     }
+
+    @Override
+    public String toHtml() {
+        return null;
+    }
 }

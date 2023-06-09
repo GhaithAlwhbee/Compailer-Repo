@@ -29,4 +29,12 @@ public class localVariableDeclaration{
     public String toString() {
         return "localVariable : " + primitive +" "+ variableDeclaratorsObject ;
     }
+
+    public String toHtml() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("localVariable .tohtml");
+
+        return stringBuilder.toString();
+    }
+
 }

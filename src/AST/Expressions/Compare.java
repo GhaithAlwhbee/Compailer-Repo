@@ -1,8 +1,19 @@
 package AST.Expressions;
 
 public class Compare implements Expression{
+    String type;
+    @Override
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public String getType() {
+        return type;
+    }
+
+    @Override
+    public String toHtml() {
         return null;
     }
 

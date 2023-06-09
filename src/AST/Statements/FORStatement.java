@@ -21,6 +21,11 @@ public class FORStatement implements Statement{
         return ex1;
     }
 
+    @Override
+    public String toHtml() {
+        return null;
+    }
+
     public void setEx1(Expression ex1) {
         this.ex1 = ex1;
     }

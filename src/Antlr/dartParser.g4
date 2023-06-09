@@ -41,10 +41,24 @@ classDeclaration
 
 classBodyDeclaration
      : localVariableDeclaration SC                          #VariableDeclarationClassBody
+     | constructorDeclaration SC                            #ConstructorDeclarationClassBody
    //  | STATIC_? block
      | classOrInterfaceModifier* methodDeclaration          #MethodDeclarationClassBody
      | classOrInterfaceModifier* classDeclaration           #ClassDeclarationClassBody
      ;
+
+constructorDeclaration
+    : IDENTIFIER formalParameters block
+    ;
+
+//constructorBody
+//    : OBC blockStatement* CBC
+//    ;
+
+
+constructorCall
+    : IDENTIFIER OP properties CP
+    ;
 
 // variable decleration
 
@@ -66,24 +80,35 @@ program
     ;
 
 
+/*
+
+functionSignature
+    : returnType? name=formalParameterList
+    ;
+
+
+
+*/
+
 
 // method decleration
 
 methodDeclaration
-    : (primitiveType | VOID_) IDENTIFIER formalParameters  block
+    : (primitiveType | VOID_ | WIDGET) IDENTIFIER formalParameters  block
     ;
 
-methodBody
-    : block
-    | SC
-    ;
+//functionBody
+//    : '=>' expression ';'
+//    | block
+//    ;
 
 formalParameters
-    : OP formalParameter (C formalParameter)* CP
+    : OP formalParameter? (C formalParameter)* CP
     ;
 
 formalParameter
     : primitiveType IDENTIFIER
+    | OBC (REQUIRED_ THIS_ DOT IDENTIFIER)+ CBC
     ;
 
 //   statment decleration
@@ -95,6 +120,7 @@ statement
     | WHILE_ parExpression statement                        #StatementWHILE
     | DO_ statement WHILE_ parExpression SC                 #StatementDoWhile
     | localVariableDeclaration  SC                          #StatementVariableDeclaration
+    | widget                                                #StatementWidget
     | expression SC                                         #StatementExpression
     ;
 
@@ -107,12 +133,14 @@ expression
     |  expression PL expression                             #ExpressionPlusExpression
     |  expression op=(LTE | EG | GT | LT | EE) expression   #ExpressionCompareExpression
     |  expression postfix=(PLPL | MM)                       #ExpressionPostfix
-    |  RETURN_ expression? SC                               #ReturnExpression
+    |  RETURN_ expression?                                  #ReturnExpression
     |  THROW_ expression SC                                 #ThrowExpression
     |  BREAK_  SC                                           #BreakExpression
     |  CONTINUE_ SC                                         #ContinueExpression
     |  literal                                              #ExpressionLiteral
-    |  IDENTIFIER (EQ expression)?                          #ExpressionIDENTIFIER
+    |  IDENTIFIER (EQ expression)?  (OP CP)?                #ExpressionIDENTIFIER
+    |  widget                                               #ExpressionWidget
+    |  constructorCall                                      #ExpressionConstructorCall
     ;
 
 expressionList
@@ -161,6 +189,8 @@ primitiveType
     | FLOAT             #FloatType
     | DOUBLE            #DoubleType
     | STRING_           #StringType
+    | VOID_             #VoidType
+    | WIDGET            #WidgetType
     ;
 
 //classOrInterfaceType
@@ -204,30 +234,114 @@ qualifiedName
 
 //////////////////////////////// flutter
 
-scaffold : Scaffold_WIDGET OP
-            (APPBAR_HEAD CO appBar C)?
-            (BODY_HEAD CO widget C)?
-            CP SC
+
+app : widget
+    ;
+
+widget      : APPBAR            OP ( properties ) CP               #APPBAR_Widget
+            | BUTTON            OP ( properties ) CP               #BUTTON_Widget
+            | CENTER            OP ( properties ) CP               #CENTER_Widget
+            | CONTAINER         OP ( properties ) CP               #CONTAINER_Widget
+            | COLUMN            OP ( properties ) CP               #COLUMN_Widget
+            | ELEVATEDBUTTON    OP ( properties ) CP               #ELEVATEDBUTTON_Widget
+            | IMAGE             OP ( properties ) CP               #IMAGE_Widget
+            | LISTVIEW          OP ( properties ) CP               #LISTVIEW_Widget
+            | MATERIALAPP       OP ( properties ) CP               #MATERIALAPP_Widget
+            | MATERIALPAGEROUTE OP ( properties ) CP               #MATERIALPAGEROUTE_Widget
+            | NAVIGATOR         DOT PUSH OP widget CP SC           #NAVIGATOR_Widget //DOT PUSH OP widget CP SC
+            | ROW               OP ( properties ) CP               #ROW_Widget
+            | SCAFFOLD          OP ( properties ) CP               #SCAFFOLD_Widget
+            | TEXT              OP ( properties ) CP               #TEXT_Widget
+            ;
+
+properties : property (C property)* C?
+//           | property C properties
+           ;
+
+property : APPBAR_PROPERTY widget                               #APPBAR_PROPERTY
+         | BODY_PROPERTY widget                                 #BODY_PROPERTY
+         | BUILDER_PROPERTY anonymousFunction                   #BUILDER_PROPERTY
+         | CHILD_PROPERTY widget                                #CHILD_PROPERTY
+         | CHILDREN_PROPERTY OB child_widgets CB                #CHILDREN_PROPERTY
+         | COLOR_PROPERTY COLOR                                 #COLOR_PROPERTY
+         | FLOATINGACTIONBUTTON_PROPERTY widget                 #FLOATINGACTIONBUTTON_PROPERTY
+         | HOME_PROPERTY widget                                 #HOME_PROPERTY //////////////////////////
+         | IMAGE_PROPERTY STRING_LITERAL                        #IMAGE_PROPERTY
+         | ONPRESSED_PROPERTY anonymousFunction                 #ONPRESSED_PROPERTY
+         | PADDING_PROPERTY NUMBER                              #PADDING_PROPERTY
+         | TEXT_PROPERTY STRING_LITERAL                         #TEXT_PROPERTY
+         | TITLE_PROPERTY widget                                #TITLE_PROPERTY
+         | TITLE_PROPERTY_MATERIALAPP STRING_LITERAL            #TITLE_PROPERTY_MATERIALAPP  ///////////////////
+         | IDENTIFIER CO expression                             #IDENTIFIER_PROPERTY         ///////////////////
          ;
 
-widget
-    :   text
-    |   container
 
-;
+child_widgets :  widget (C widget)* C?
+              ;
 
-appBar: APPBAR_WIDGET OP
-        TITLE CO CONST_? text
-        CP
-        ;
 
-text : TEXT_WIDGET OP IDENTIFIER CP
+anonymousFunction
+    :  formalParameters  ARROW expression SC                   #ReturnOwnStatement
+    |  formalParameters  block                                 #ReturnMultiStatement
+    ;
 
-;
+navigatorFunction : PUSH OP widget CP SC
+    //: PUSH OP CONTEXT C widget CP SC
+    ;
 
-container
-    : CONTAINER_WIDGET OP
-      CHILD_HEAD CO CONST_? widget C
-      CP
-;
+materialPageRoute
+    : MATERIALPAGE_ROUTE OP BUILDER CO anonymousFunction
+    ;
+
+context
+    : IDENTIFIER
+    ;
+
+
+
+///////////      EXAMPLE  2   //////////////
+/*
+
+Page2()
+
+class person{
+
+Widget build() {
+    return Scaffold(
+      appBar: AppBar(title: Text(text: "Page 1")),
+      body: Center(
+        child: ElevatedButton(
+          child: Text(text: "Go to Page 2"),
+          onPressed: () {
+            Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Page2()),
+                        );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+*/
+
+
+///////////      EXAMPLE  1   //////////////
+/*
+
+ListView(
+  children: [
+    Container(color: #FF0000, padding: 10) {
+      Text(text: "Hello, world!")
+      RaisedButton(color: #00FF00, text: "Click me!", onPressed: () => void)
+    }
+    Container(color: #0000FF, padding: 20) {
+      Text(text: "Welcome to my app!")
+    }
+  ]
+)
+
+*/
+
 
